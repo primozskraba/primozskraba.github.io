@@ -2,15 +2,267 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Your Name</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Primoz Skraba · Queen Mary University of London</title>
+  <meta name="description" content="Primoz Skraba, Professor in the School of Mathematical Sciences at Queen Mary University of London. Applied and stochastic topology, persistent homology, algorithms, and machine learning.">
+  <meta name="author" content="Primoz Skraba">
+
+  <meta property="og:type" content="profile">
+  <meta property="og:title" content="Primoz Skraba">
+  <meta property="og:description" content="Applied and stochastic topology, persistent homology, algorithms, and machine learning. Queen Mary University of London.">
+  <meta property="og:image" content="assets/img/hextorus.png">
+
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+
+  <script>
+    try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <script>
+    window.MathJax = { tex: { inlineMath: [["\\(", "\\)"]] }, startup: { typeset: true } };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Primoz Skraba",
+    "jobTitle": "Professor",
+    "affiliation": { "@type": "CollegeOrUniversity", "name": "Queen Mary University of London" },
+    "sameAs": [
+      "https://scholar.google.com/citations?user=j6e4dFcAAAAJ",
+      "https://arxiv.org/search/?query=primoz+skraba&searchtype=author"
+    ]
+  }
+  </script>
 </head>
 <body>
-  <h1>Your Name</h1>
-  <p>Short bio here.</p>
-  <ul>
-    <li><a href="https://github.com/your-username">GitHub</a></li>
-    <li><a href="mailto:you@example.com">Email</a></li>
-  </ul>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Sections">
+      <a class="nav-name" href="#home">P. Skraba</a>
+      <ul class="nav-links">
+        <li><a href="#research">Research</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#teaching">Teaching</a></li>
+        <li><a href="#talks">Talks</a></li>
+        <li><a href="#viewer">Viewer</a></li>
+        <li><a href="#cv">CV</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <i class="fa-solid fa-moon" aria-hidden="true"></i>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <!-- Home -->
+    <section id="home" class="hero">
+      <div class="wrap hero-grid">
+        <img src="assets/img/profile.jpg" alt="Portrait of Primoz Skraba" class="profile-pic" width="333" height="500">
+
+        <div class="hero-text">
+          <h1>Primoz Skraba</h1>
+          <p class="role">Professor · School of Mathematical Sciences<br>Queen Mary University of London</p>
+          <p class="email"><i class="fa-regular fa-envelope" aria-hidden="true"></i> initial.lastname@qmul.ac.uk</p>
+          <p>
+            I do applied topology: mostly geometry, algebra, and recently stochastic topology,
+            with a bunch of other things such as algorithms, computational geometry, and machine learning.
+            A long time ago I used to do signal processing. Most of my recent papers are on arXiv or my
+            Google Scholar page; otherwise, see <a href="#publications">publications</a>.
+          </p>
+          <div class="social">
+            <a href="https://arxiv.org/search/?query=primoz+skraba&amp;searchtype=author" target="_blank" rel="noopener"><i class="fa-solid fa-paper-plane" aria-hidden="true"></i> arXiv</a>
+            <a href="https://scholar.google.com/citations?user=j6e4dFcAAAAJ&amp;hl=en" target="_blank" rel="noopener"><i class="fa-solid fa-graduation-cap" aria-hidden="true"></i> Google Scholar</a>
+            <a href="CV.pdf" target="_blank" rel="noopener"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> CV</a>
+          </div>
+        </div>
+
+        <figure class="hero-figure">
+          <img src="assets/img/hextorus.png" alt="Percolation on a hexagonal lattice on the torus, with a giant cycle highlighted in red" width="687" height="650">
+        </figure>
+      </div>
+
+      <div class="wrap">
+        <div class="latest">
+          <h2 class="eyebrow">Latest papers</h2>
+          <ul id="latest-list" class="latest-list"></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- Research -->
+    <section id="research" class="section">
+      <div class="wrap narrow">
+        <h2 class="section-title">Research</h2>
+
+        <div class="area">
+          <h3>Persistent Homology</h3>
+          <p>Much of my research is on understanding persistent homology and its various aspects. Below are just some bits and pieces.</p>
+          <dl>
+            <dt>Stability</dt>
+            <dd>Persistence diagrams are the main invariant that is studied. We often try to understand spaces from finite samples, in which case stability is important as it allows us to get quantitative control. I am very interested in stability statements and how they relate to classical objects such as exact sequences. In general there is a mixture of combinatorial and algebraic aspects to these types of questions.</dd>
+            <dt>Variants</dt>
+            <dd>There are several variants of persistence, such as zigzag, robustness, and multiparameter. There are many open and interesting questions in this area. I have worked on some of these and have recently started working on multiparameter questions more concretely.</dd>
+            <dt>Algorithms</dt>
+            <dd>A key factor in persistent homology is that it can be computed quite efficiently (thanks to the hard work of many other people). I have worked on various complexity questions and there are still interesting questions here.</dd>
+          </dl>
+        </div>
+
+        <div class="area">
+          <h3>Stochastic Topology</h3>
+          <p>This is, roughly speaking, asking about the topology of a space which comes from a random process. In particular, I am interested in the homology groups (and ultimately homotopy groups) of these spaces. The random models I am interested in are usually geometric (Poisson, Boolean, or some regular tiling). My interest began with the work on maximal classes, the persistent classes which have the largest \(\frac{death}{birth}\), which for a Boolean model we found to be \(O\left(\frac{\log n}{\log\log n}\right)^{1/i}\), where \(i\) is the homological dimension.</p>
+          <dl>
+            <dt>Percolation</dt>
+            <dd>There is an active area of study around the sudden appearance of an infinite component in many random models, often called a sharp threshold. I am interested in these for the appearance of homology, e.g. the essential classes of a manifold. We know these appear at \(O(1/n^d)\) but there are many open questions here.</dd>
+            <dt>Universality</dt>
+            <dd>If one considers \(\frac{death}{birth}\) as a distribution, amazingly it seems that this distribution only depends on homological and ambient dimension (and what complex we build) but not the underlying generating distribution. Empirically, even this dependence can be removed with the appropriate normalization, which we are investigating.</dd>
+            <dt>Spanning acycles</dt>
+            <dd>Minimal spanning trees have been well studied in both the probability and computer science literature. My interest is in minimal spanning acycles. Introduced by Kalai, they are also called generalized trees and are higher-dimensional analogues.</dd>
+          </dl>
+        </div>
+
+        <div class="area">
+          <h3>Machine Learning</h3>
+          <p>As part of the Department for Artificial Intelligence at the Jožef Stefan Institute, I worked on several aspects of machine learning.</p>
+          <dl>
+            <dt>Topological information in neural networks</dt>
+            <dd>Deep networks have revolutionized machine learning with an immense amount of research going into them. I have focused on where and how topological (and geometric) information can be incorporated into networks to improve or control learning, or to understand the result.</dd>
+            <dt>Other</dt>
+            <dd>I am also still interested in other techniques from machine learning, e.g. clustering and functional data analysis, both related to topology/geometry/algebra and more classical machine learning techniques.</dd>
+          </dl>
+        </div>
+
+        <div class="area">
+          <h3>Applications</h3>
+          <p>While I do more theory these days, I am still interested in applications to data, as well as the interesting theoretical questions which arise from them.</p>
+          <dl>
+            <dt>Euler surfaces and transforms</dt>
+            <dd>Rather than consider homology, we can consider the Euler characteristic. This is very efficient to compute and captures a lot of interesting information, although it is not well understood what information or how best to use it. Additionally, there are connections with constructible functions (and (co)sheaves) which are interesting directions to explore.</dd>
+            <dt>Visualization</dt>
+            <dd>Topology can be very useful for visualization. In addition to work on vector fields, there was also work on capturing states in time series. Topological visualization is an active area of research with many interesting problems.</dd>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- Publications -->
+    <section id="publications" class="section">
+      <div class="wrap">
+        <h2 class="section-title">Publications</h2>
+        <p class="muted">All papers should be publicly accessible in some version; those without an arXiv or PDF link are open access.</p>
+
+        <div class="pub-controls">
+          <div class="chips" role="group" aria-label="Filter by type">
+            <button type="button" class="chip" data-type="all" aria-pressed="true">All <span class="count"></span></button>
+            <button type="button" class="chip" data-type="journal" aria-pressed="false">Journal <span class="count"></span></button>
+            <button type="button" class="chip" data-type="conference" aria-pressed="false">Conference <span class="count"></span></button>
+            <button type="button" class="chip" data-type="preprint" aria-pressed="false">Preprint <span class="count"></span></button>
+            <button type="button" class="chip" data-type="other" aria-pressed="false">Other <span class="count"></span></button>
+          </div>
+          <label class="search">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <span class="visually-hidden">Search publications</span>
+            <input id="pub-search" type="search" placeholder="Search title, co-author, venue…" autocomplete="off">
+          </label>
+        </div>
+
+        <div id="pub-list" class="pub-list" aria-live="polite"></div>
+        <p id="pub-empty" class="muted" hidden>No publications match that search.</p>
+      </div>
+    </section>
+
+    <!-- Teaching -->
+    <section id="teaching" class="section">
+      <div class="wrap narrow">
+        <h2 class="section-title">Teaching</h2>
+        <p class="muted">Notes may be uploaded here from time to time.</p>
+        <ul class="card-list">
+          <li><strong>Programming in Python II</strong><span>Undergraduate · QMUL</span></li>
+          <li><strong>Optimisation for Business Processes</strong><span>Postgraduate · QMUL</span></li>
+          <li><strong>Storing, Manipulating, and Visualising Data</strong><span>Postgraduate · QMUL</span></li>
+          <li><strong>Introduction to Applied Topology</strong><span>PhD level · London Taught Course Centre</span></li>
+          <li><strong>Discrete Mathematics</strong><span>Undergraduate · QMUL</span></li>
+          <li><strong>Calculus / Analysis I</strong><span>Undergraduate · University of Nova Gorica</span></li>
+          <li><strong>Dynamic Systems</strong><span>Postgraduate · FAMNIT, University of Primorska</span></li>
+          <li><strong>Discrete Mathematics</strong><span>Undergraduate · FAMNIT, University of Primorska</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Talks -->
+    <section id="talks" class="section">
+      <div class="wrap">
+        <h2 class="section-title">Talks</h2>
+        <div class="talks-grid">
+          <a class="talk" href="https://www.youtube.com/watch?v=15o4pQqjsbU" target="_blank" rel="noopener">
+            <img src="https://i.ytimg.com/vi/15o4pQqjsbU/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+            <span>Optimisation, topology and shapes</span>
+          </a>
+          <a class="talk" href="https://www.youtube.com/watch?v=F8_bIQqcMFc" target="_blank" rel="noopener">
+            <img src="https://i.ytimg.com/vi/F8_bIQqcMFc/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+            <span>An approximate nerve theorem</span>
+          </a>
+          <a class="talk" href="https://www.youtube.com/watch?v=M5hUsOb-XX4" target="_blank" rel="noopener">
+            <img src="https://i.ytimg.com/vi/M5hUsOb-XX4/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+            <span>Algebraically manipulating persistence modules (and a Minkowski-type bound)</span>
+          </a>
+          <a class="talk" href="https://www.youtube.com/watch?v=o4CK1MZ8984" target="_blank" rel="noopener">
+            <img src="https://i.ytimg.com/vi/o4CK1MZ8984/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+            <span>Homological percolation and persistence</span>
+          </a>
+          <a class="talk" href="https://www.youtube.com/watch?v=em1zxTIYk4U" target="_blank" rel="noopener">
+            <img src="https://i.ytimg.com/vi/em1zxTIYk4U/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+            <span>SGP 2020: Topology-aware surface reconstruction for point clouds</span>
+          </a>
+          <a class="talk" href="https://www.youtube.com/watch?v=NGQ-M2gdibQ" target="_blank" rel="noopener">
+            <img src="https://i.ytimg.com/vi/NGQ-M2gdibQ/hqdefault.jpg" alt="" loading="lazy" width="480" height="360">
+            <span>Cohomological learning of periodic motion</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Viewer -->
+    <section id="viewer" class="section">
+      <div class="wrap">
+        <h2 class="section-title">Cycle Viewer</h2>
+        <p class="muted">An interactive viewer for persistent cycles, hosted on Streamlit. It can take up to a minute to start if nobody has used it recently.</p>
+        <div class="viewer-frame" id="viewer-frame">
+          <button type="button" class="btn" id="viewer-load"><i class="fa-solid fa-play" aria-hidden="true"></i> Launch viewer</button>
+          <a class="btn btn-ghost" href="https://cycleview-persistence.streamlit.app" target="_blank" rel="noopener"><i class="fa-solid fa-up-right-from-square" aria-hidden="true"></i> Open in new tab</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CV -->
+    <section id="cv" class="section">
+      <div class="wrap">
+        <h2 class="section-title">Curriculum Vitae</h2>
+        <p><a class="btn" href="CV.pdf" target="_blank" rel="noopener"><i class="fa-solid fa-download" aria-hidden="true"></i> Download CV (PDF)</a></p>
+        <div class="pdf-frame">
+          <iframe src="CV.pdf" title="Curriculum vitae" loading="lazy"></iframe>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© <span id="year"></span> Primoz Skraba</span>
+      <a href="#home">Back to top <i class="fa-solid fa-arrow-up" aria-hidden="true"></i></a>
+    </div>
+  </footer>
+
+  <script src="assets/js/publications.js"></script>
+  <script src="assets/js/main.js"></script>
 </body>
 </html>
