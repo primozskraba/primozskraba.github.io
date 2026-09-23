@@ -112,55 +112,58 @@
 
     <!-- Research -->
     <section id="research" class="section">
-      <div class="wrap narrow">
+      <div class="wrap">
         <h2 class="section-title">Research</h2>
+        <p class="lede">I work in applied topology, where algebraic topology meets probability, geometry and computation. These are the main threads, each with a few representative papers.</p>
 
-        <div class="area">
-          <h3>Persistent Homology</h3>
-          <p>Much of my research is on understanding persistent homology and its various aspects. Below are just some bits and pieces.</p>
-          <dl>
-            <dt>Stability</dt>
-            <dd>Persistence diagrams are the main invariant that is studied. We often try to understand spaces from finite samples, in which case stability is important as it allows us to get quantitative control. I am very interested in stability statements and how they relate to classical objects such as exact sequences. In general there is a mixture of combinatorial and algebraic aspects to these types of questions.</dd>
-            <dt>Variants</dt>
-            <dd>There are several variants of persistence, such as zigzag, robustness, and multiparameter. There are many open and interesting questions in this area. I have worked on some of these and have recently started working on multiparameter questions more concretely.</dd>
-            <dt>Algorithms</dt>
-            <dd>A key factor in persistent homology is that it can be computed quite efficiently (thanks to the hard work of many other people). I have worked on various complexity questions and there are still interesting questions here.</dd>
-          </dl>
-        </div>
+        <div class="research-grid">
+          <article class="theme">
+            <h3>Stochastic topology</h3>
+            <p>What does the topology of a random space look like? I study the homology of random geometric complexes (Poisson and Boolean models, random tilings): the largest persistent cycles, sharp thresholds for the appearance of giant cycles, minimal spanning acycles, and the surprising universality of the \(\text{death}/\text{birth}\) distribution across very different random models.</p>
+            <h4>Key papers</h4>
+            <ul class="key-papers">
+              <li><a href="https://doi.org/10.1090/cams/69" target="_blank" rel="noopener">Universality in random persistent homology and scale-invariant functionals</a> <span>Comm. AMS 2026</span></li>
+              <li><a href="https://doi.org/10.1093/imrn/rnaa305" target="_blank" rel="noopener">Homological percolation: the formation of giant k-cycles</a> <span>IMRN 2022</span></li>
+              <li><a href="https://doi.org/10.1142/S1793525323500590" target="_blank" rel="noopener">Central limit theorem for Euclidean minimal spanning acycles</a> <span>J. Topol. Anal. 2024</span></li>
+              <li><a href="https://doi.org/10.1214/16-AAP1232" target="_blank" rel="noopener">Maximally persistent cycles in random geometric complexes</a> <span>Ann. Appl. Probab. 2017</span></li>
+            </ul>
+          </article>
 
-        <div class="area">
-          <h3>Stochastic Topology</h3>
-          <p>This is, roughly speaking, asking about the topology of a space which comes from a random process. In particular, I am interested in the homology groups (and ultimately homotopy groups) of these spaces. The random models I am interested in are usually geometric (Poisson, Boolean, or some regular tiling). My interest began with the work on maximal classes, the persistent classes which have the largest \(\frac{death}{birth}\), which for a Boolean model we found to be \(O\left(\frac{\log n}{\log\log n}\right)^{1/i}\), where \(i\) is the homological dimension.</p>
-          <dl>
-            <dt>Percolation</dt>
-            <dd>There is an active area of study around the sudden appearance of an infinite component in many random models, often called a sharp threshold. I am interested in these for the appearance of homology, e.g. the essential classes of a manifold. We know these appear at \(O(1/n^d)\) but there are many open questions here.</dd>
-            <dt>Universality</dt>
-            <dd>If one considers \(\frac{death}{birth}\) as a distribution, amazingly it seems that this distribution only depends on homological and ambient dimension (and what complex we build) but not the underlying generating distribution. Empirically, even this dependence can be removed with the appropriate normalization, which we are investigating.</dd>
-            <dt>Spanning acycles</dt>
-            <dd>Minimal spanning trees have been well studied in both the probability and computer science literature. My interest is in minimal spanning acycles. Introduced by Kalai, they are also called generalized trees and are higher-dimensional analogues.</dd>
-          </dl>
-        </div>
+          <article class="theme">
+            <h3>Persistence theory</h3>
+            <p>Persistence diagrams are the central invariant of topological data analysis. I work on their stability, i.e. quantitative control when spaces are only known through samples, and how it relates to classical tools such as exact sequences. I also work on variants of persistence: zigzag, multiparameter, periodic, and Möbius inversion.</p>
+            <h4>Key papers</h4>
+            <ul class="key-papers">
+              <li><a href="https://doi.org/10.1090/tran/9549" target="_blank" rel="noopener">Möbius homology</a> <span>Trans. AMS 2026</span></li>
+              <li><a href="https://arxiv.org/abs/2006.16824" target="_blank" rel="noopener">Wasserstein stability for persistence diagrams</a> <span>arXiv</span></li>
+              <li><a href="https://doi.org/10.1007/s10208-017-9368-6" target="_blank" rel="noopener">An approximate nerve theorem</a> <span>Found. Comput. Math. 2018</span></li>
+              <li><a href="https://arxiv.org/abs/2505.13051" target="_blank" rel="noopener">Persistent local systems of periodic spaces</a> <span>arXiv 2025</span></li>
+            </ul>
+          </article>
 
-        <div class="area">
-          <h3>Machine Learning</h3>
-          <p>As part of the Department for Artificial Intelligence at the Jožef Stefan Institute, I worked on several aspects of machine learning.</p>
-          <dl>
-            <dt>Topological information in neural networks</dt>
-            <dd>Deep networks have revolutionized machine learning with an immense amount of research going into them. I have focused on where and how topological (and geometric) information can be incorporated into networks to improve or control learning, or to understand the result.</dd>
-            <dt>Other</dt>
-            <dd>I am also still interested in other techniques from machine learning, e.g. clustering and functional data analysis, both related to topology/geometry/algebra and more classical machine learning techniques.</dd>
-          </dl>
-        </div>
+          <article class="theme">
+            <h3>Algorithms</h3>
+            <p>Persistent homology can be computed efficiently, thanks to the hard work of many people. I am interested in its complexity: algorithms in matrix multiplication time, exploiting sparsity, and computing persistence of infinite periodic structures from finite data.</p>
+            <h4>Key papers</h4>
+            <ul class="key-papers">
+              <li><a href="https://doi.org/10.4230/LIPIcs.SoCG.2025.68" target="_blank" rel="noopener">Persistent (co)homology in matrix multiplication time</a> <span>SoCG 2025</span></li>
+              <li><a href="https://doi.org/10.1145/1998196.1998229" target="_blank" rel="noopener">Zigzag persistence in matrix multiplication time</a> <span>SoCG 2011</span></li>
+              <li><a href="https://doi.org/10.1137/1.9781611974331.ch86" target="_blank" rel="noopener">Persistent homology and nested dissection</a> <span>SODA 2016</span></li>
+              <li><a href="https://arxiv.org/abs/2312.00709" target="_blank" rel="noopener">Computing 1-periodic persistent homology with finite windows</a> <span>arXiv</span></li>
+            </ul>
+          </article>
 
-        <div class="area">
-          <h3>Applications</h3>
-          <p>While I do more theory these days, I am still interested in applications to data, as well as the interesting theoretical questions which arise from them.</p>
-          <dl>
-            <dt>Euler surfaces and transforms</dt>
-            <dd>Rather than consider homology, we can consider the Euler characteristic. This is very efficient to compute and captures a lot of interesting information, although it is not well understood what information or how best to use it. Additionally, there are connections with constructible functions (and (co)sheaves) which are interesting directions to explore.</dd>
-            <dt>Visualization</dt>
-            <dd>Topology can be very useful for visualization. In addition to work on vector fields, there was also work on capturing states in time series. Topological visualization is an active area of research with many interesting problems.</dd>
-          </dl>
+          <article class="theme">
+            <h3>Topology, data &amp; machine learning</h3>
+            <p>Topology as a tool for data: incorporating topological information into neural networks, the Euler characteristic as a cheap but informative descriptor, geometric invariants such as metric magnitude and intrinsic dimension, and earlier work on topological visualization of vector fields and time series.</p>
+            <h4>Key papers</h4>
+            <ul class="key-papers">
+              <li><a href="https://proceedings.mlr.press/v108/gabrielsson20a.html" target="_blank" rel="noopener">A topology layer for machine learning</a> <span>AISTATS 2020</span></li>
+              <li><a href="https://doi.org/10.3934/fods.2021027" target="_blank" rel="noopener">Euler characteristic surfaces</a> <span>Found. Data Sci. 2022</span></li>
+              <li><a href="https://doi.org/10.1609/aaai.v39i15.33687" target="_blank" rel="noopener">Approximating metric magnitude of point sets</a> <span>AAAI 2025</span></li>
+              <li><a href="https://doi.org/10.1145/2535927" target="_blank" rel="noopener">Persistence-based clustering in Riemannian manifolds</a> <span>J. ACM 2013</span></li>
+            </ul>
+          </article>
         </div>
       </div>
     </section>
