@@ -46,9 +46,46 @@
     if (p.arxiv) links.append(link("https://arxiv.org/abs/" + p.arxiv, "arXiv"));
     if (p.pdf) links.append(link(encodeURI(p.pdf), "PDF"));
     if (p.doi) links.append(link("https://doi.org/" + p.doi, "DOI"));
+    if (p.bibtex) {
+      const btn = el("button", { type: "button", class: "bib-btn" }, "BibTeX");
+      btn.addEventListener("click", () => openBib(p));
+      links.append(btn);
+    }
 
     return el("li", { class: "pub" }, [title, authorsNode(p.authors), venue, links]);
   }
+
+  const bibDialog = document.getElementById("bib-dialog");
+  const bibText = document.getElementById("bib-text");
+  const bibCopy = document.getElementById("bib-copy");
+
+  function selectBib() {
+    const range = document.createRange();
+    range.selectNodeContents(bibText);
+    getSelection().removeAllRanges();
+    getSelection().addRange(range);
+  }
+
+  function openBib(p) {
+    bibText.textContent = p.bibtex.trim();
+    bibCopy.textContent = "Copy";
+    bibDialog.showModal();
+    selectBib();
+  }
+
+  bibCopy.addEventListener("click", () => {
+    selectBib();
+    let ok = false;
+    try { ok = document.execCommand("copy"); } catch (e) {}
+    if (ok) { bibCopy.textContent = "Copied"; return; }
+    navigator.clipboard.writeText(bibText.textContent).then(
+      () => (bibCopy.textContent = "Copied"),
+      () => (bibCopy.textContent = "Press ⌘C / Ctrl+C")
+    );
+  });
+  bibDialog.addEventListener("click", (e) => {
+    if (e.target === bibDialog) bibDialog.close();
+  });
 
   // Latest papers (hero)
   const latest = document.getElementById("latest-list");

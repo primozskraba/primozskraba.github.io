@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Primoz Skraba · Queen Mary University of London</title>
-  <meta name="description" content="Primoz Skraba, Professor in the School of Mathematical Sciences at Queen Mary University of London. Applied and stochastic topology, persistent homology, algorithms, and machine learning.">
+  <title>Primoz Skraba</title>
+  <meta name="description" content="Primoz Skraba, Professor in the School of Mathematical Sciences at Queen Mary University of London, also affiliated with the Faculty of Computer and Information Science, University of Ljubljana. Applied and stochastic topology, persistent homology, algorithms, and machine learning.">
   <meta name="author" content="Primoz Skraba">
 
   <meta property="og:type" content="profile">
@@ -35,7 +35,10 @@
     "@type": "Person",
     "name": "Primoz Skraba",
     "jobTitle": "Professor",
-    "affiliation": { "@type": "CollegeOrUniversity", "name": "Queen Mary University of London" },
+    "affiliation": [
+      { "@type": "CollegeOrUniversity", "name": "Queen Mary University of London" },
+      { "@type": "CollegeOrUniversity", "name": "University of Ljubljana, Faculty of Computer and Information Science" }
+    ],
     "sameAs": [
       "https://scholar.google.com/citations?user=j6e4dFcAAAAJ",
       "https://arxiv.org/search/?query=primoz+skraba&searchtype=author"
@@ -71,8 +74,16 @@
 
         <div class="hero-text">
           <h1>Primoz Skraba</h1>
-          <p class="role">Professor · School of Mathematical Sciences<br>Queen Mary University of London</p>
-          <p class="email"><i class="fa-regular fa-envelope" aria-hidden="true"></i> initial.lastname@qmul.ac.uk</p>
+          <ul class="affiliations">
+            <li>
+              <span class="aff-name">Professor · School of Mathematical Sciences<br>Queen Mary University of London</span>
+              <span class="email"><i class="fa-regular fa-envelope" aria-hidden="true"></i> initial.lastname@qmul.ac.uk</span>
+            </li>
+            <li>
+              <span class="aff-name">Faculty of Computer and Information Science<br>University of Ljubljana</span>
+              <span class="email"><i class="fa-regular fa-envelope" aria-hidden="true"></i> firstname.lastname@fri.uni-lj.si</span>
+            </li>
+          </ul>
           <p>
             I do applied topology: mostly geometry, algebra, and recently stochastic topology,
             with a bunch of other things such as algorithms, computational geometry, and machine learning.
@@ -254,6 +265,17 @@
       </div>
     </section>
   </main>
+
+  <dialog id="bib-dialog" class="bib-dialog" aria-labelledby="bib-heading">
+    <div class="bib-head">
+      <h2 id="bib-heading">BibTeX</h2>
+      <div class="bib-actions">
+        <button type="button" class="btn" id="bib-copy">Copy</button>
+        <form method="dialog"><button class="btn btn-ghost" aria-label="Close">Close</button></form>
+      </div>
+    </div>
+    <pre id="bib-text"></pre>
+  </dialog>
 
   <footer class="site-footer">
     <div class="wrap">
