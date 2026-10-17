@@ -57,7 +57,7 @@
         <li><a href="#publications">Publications</a></li>
         <li><a href="#teaching">Teaching</a></li>
         <li><a href="#talks">Talks</a></li>
-        <li><a href="#viewer">Viewer</a></li>
+        <li><a href="#demos">Demos</a></li>
         <li><a href="#cv">CV</a></li>
       </ul>
       <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
@@ -245,15 +245,34 @@
       </div>
     </section>
 
-    <!-- Viewer -->
-    <section id="viewer" class="section">
+    <!-- Demos -->
+    <section id="demos" class="section">
       <div class="wrap">
-        <h2 class="section-title">Cycle Viewer</h2>
-        <p class="muted">An interactive viewer for persistent cycles, hosted on Streamlit. It can take up to a minute to start if nobody has used it recently.</p>
-        <div class="viewer-frame" id="viewer-frame">
-          <button type="button" class="btn" id="viewer-load"><i class="fa-solid fa-play" aria-hidden="true"></i> Launch viewer</button>
-          <a class="btn btn-ghost" href="https://cycleview-persistence.streamlit.app" target="_blank" rel="noopener"><i class="fa-solid fa-up-right-from-square" aria-hidden="true"></i> Open in new tab</a>
-        </div>
+        <h2 class="section-title">Demos</h2>
+
+        <article class="demo" id="viewer">
+          <h3>Cycle Viewer</h3>
+          <p class="muted">An interactive viewer for persistent cycles, hosted on Streamlit. It can take up to a minute to start if nobody has used it recently.</p>
+          <div class="viewer-frame" id="viewer-frame">
+            <button type="button" class="btn" id="viewer-load"><i class="fa-solid fa-play" aria-hidden="true"></i> Launch viewer</button>
+            <a class="btn btn-ghost" href="https://cycleview-persistence.streamlit.app" target="_blank" rel="noopener"><i class="fa-solid fa-up-right-from-square" aria-hidden="true"></i> Open in new tab</a>
+          </div>
+        </article>
+
+        <article class="demo demo-split" id="diagram-chaser">
+          <a class="demo-shot" href="diagram-chaser/" target="_blank" rel="noopener" aria-label="Open the Diagram Chaser">
+            <img src="assets/img/diagram-chaser.jpg" alt="The snake lemma drawn in the Diagram Chaser: two exact rows, kernels and cokernels of the vertical maps, and the connecting map δ as a dashed arrow" loading="lazy" width="1000" height="585">
+          </a>
+          <div>
+            <h3>Persistence Module Diagram Chaser</h3>
+            <p>Draw commutative diagrams of persistence modules (finitely generated \(k[t]\)-modules) and ask diagram-chase questions: is a map injective, surjective or an isomorphism, is a sequence exact, does an induced map exist, such as the snake lemma&rsquo;s connecting map? Every positive answer comes with a proof in words and a Lean&nbsp;4 / Mathlib proof; every negative one with a finite-dimensional counterexample. It runs entirely in the browser.</p>
+            <p class="muted small-note">Proofs can be checked in Lean 4 Web from the app. If that does not load, download the <code>.lean</code> file or run the app locally; instructions are in the app&rsquo;s Help and on GitHub.</p>
+            <p class="demo-actions">
+              <a class="btn" href="diagram-chaser/" target="_blank" rel="noopener"><i class="fa-solid fa-diagram-project" aria-hidden="true"></i> Open the Diagram Chaser</a>
+              <a class="btn btn-ghost" href="https://github.com/primozskraba/diagram-chaser" target="_blank" rel="noopener"><i class="fa-brands fa-github" aria-hidden="true"></i> Source &amp; run locally</a>
+            </p>
+          </div>
+        </article>
       </div>
     </section>
 

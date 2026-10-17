@@ -360,6 +360,15 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.2; }
 }
 .viewer-frame.loaded { padding: 0; border-style: solid; overflow: hidden; }
 .viewer-frame iframe { width: 100%; height: 720px; border: 0; display: block; }
+.demo + .demo { margin-top: 40px; padding-top: 32px; border-top: 1px solid var(--border); }
+.demo h3 { font-family: var(--serif); font-size: 1.3rem; font-weight: 600; margin: 0 0 8px; }
+.demo-split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 28px; align-items: center; }
+.demo-shot { display: block; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); background: #fbfaf7; }
+.demo-shot:hover { border-color: var(--accent); }
+.demo-shot img { display: block; width: 100%; height: auto; }
+.small-note { font-size: 0.9rem; }
+.small-note code { font-size: 0.85em; }
+.demo-actions { display: flex; flex-wrap: wrap; gap: 10px; margin: 16px 0 0; }
 .pdf-frame { margin-top: 16px; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; box-shadow: var(--shadow); background: var(--surface); }
 .pdf-frame iframe { width: 100%; height: 760px; border: 0; display: block; }
 
@@ -384,4 +393,5 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.2; }
   .year-label { position: static; }
   .pdf-frame { display: none; }
   .viewer-frame iframe { height: 560px; }
+  .demo-split { grid-template-columns: 1fr; gap: 18px; }
 }
