@@ -45,6 +45,13 @@
     .sw { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(0, 0, 0, 0.15); display: inline-block; }
     .paper-ref { font-size: 0.95rem; color: var(--muted); margin: -12px 0 26px; max-width: 900px; }
     .paper-ref i { margin-right: 4px; }
+    .erratum { font-size: 0.93rem; max-width: 900px; margin: -14px 0 26px; padding: 10px 14px; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--highlight) 45%, var(--border)); background: color-mix(in srgb, var(--highlight) 8%, var(--surface)); }
+    .erratum i { color: var(--highlight); margin-right: 4px; }
+    .alg-warn { font-size: 0.93rem; margin: 0 0 12px; color: var(--highlight); }
+    .alg-controls select { font: inherit; font-size: 0.92rem; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); }
+    .alg-controls label { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 0.9rem; }
+    .alg-controls .btn.icon { padding: 7px 11px; }
+    .alg-hint { color: var(--muted); font-size: 0.85rem; margin: 10px 0 0; }
     .back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.92rem; margin-bottom: 18px; }
     @media (max-width: 760px) { .alg-picker { grid-template-columns: 1fr; } }
   </style>
@@ -78,6 +85,7 @@
         <p class="paper-ref"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> The algorithms, and the numbering of algorithms and results in the animations, follow
           D. Morozov and P. Skraba, <a href="https://arxiv.org/abs/2412.02591" target="_blank" rel="noopener"><em>Persistent (Co)Homology in Matrix Multiplication Time</em></a>,
           SoCG 2025 (<a href="https://doi.org/10.4230/LIPIcs.SoCG.2025.68" target="_blank" rel="noopener">LIPIcs 332, 68:1–68:16</a>) · <a href="https://arxiv.org/abs/2412.02591" target="_blank" rel="noopener">arXiv:2412.02591</a>.</p>
+        <p class="erratum"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> <strong>Erratum.</strong> The fast row algorithm (Algorithm 5) as printed in the SoCG 2025 proceedings is incorrect. The corrected algorithm is in the <a href="https://arxiv.org/abs/2412.02591" target="_blank" rel="noopener">arXiv version</a>, which the animation below follows.</p>
 
         <div class="alg-picker" role="tablist" aria-label="Algorithm">
           <div class="alg-group">
@@ -94,6 +102,7 @@
           <h2 id="alg-title"></h2>
           <div class="alg-meta" id="alg-meta"></div>
           <p id="alg-text"></p>
+          <p class="alg-warn" id="alg-warn" hidden></p>
         </div>
 
         <div class="alg-stage">
@@ -102,11 +111,21 @@
 
         <div class="alg-controls">
           <button type="button" class="btn" id="alg-play"><i class="fa-solid fa-pause" aria-hidden="true"></i> <span>Pause</span></button>
+          <button type="button" class="btn btn-ghost icon" id="alg-prev" title="Previous step (←)" aria-label="Previous step"><i class="fa-solid fa-backward-step" aria-hidden="true"></i></button>
+          <button type="button" class="btn btn-ghost icon" id="alg-next" title="Next step (→)" aria-label="Next step"><i class="fa-solid fa-forward-step" aria-hidden="true"></i></button>
           <button type="button" class="btn btn-ghost" id="alg-restart"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Restart</button>
+          <label>Speed
+            <select id="alg-speed" aria-label="Playback speed">
+              <option value="0.25">0.25×</option><option value="0.5">0.5×</option><option value="0.75">0.75×</option>
+              <option value="1" selected>1×</option><option value="1.5">1.5×</option><option value="2">2×</option><option value="3">3×</option><option value="4">4×</option>
+            </select>
+          </label>
           <input type="range" id="alg-scrub" min="0" max="100" step="0.1" value="0" aria-label="Position in the animation">
           <span class="alg-time" id="alg-time">0:00 / 0:00</span>
           <a class="btn btn-ghost" id="alg-open" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-up-right-from-square" aria-hidden="true"></i> SVG</a>
         </div>
+
+        <p class="alg-hint">Keys: <kbd>Space</kbd> play/pause, <kbd>←</kbd>/<kbd>→</kbd> previous/next step, <kbd>−</kbd>/<kbd>+</kbd> slower/faster.</p>
 
         <ul class="legend" aria-label="Colour legend">
           <li><span class="sw" style="background:#b4b9f6"></span> non-zero entry</li>
@@ -152,19 +171,42 @@
       { id: "fast-row", group: "row", tab: "Fast", file: "6_fast_row.svg",
         title: "Fast row algorithm",
         meta: ["Algorithm 5", "binary recursion on rows", "O(n^ω)"],
-        text: "The matrix is padded with an identity block, R = [D | I], and the rows are processed bottom-up by a binary recursion. Each half is solved recursively and the result propagated with matrix products; unlike the column algorithm no inverse is needed, only column permutations and products. Restricted to the original columns it is exactly the lazy reduction (Theorem 5.5)." },
+        text: "The matrix is padded with an identity block, R = [D | I], and the rows are processed bottom-up by a binary recursion. Each half is solved recursively and the result propagated with matrix products; unlike the column algorithm no inverse is needed, only column permutations and products. Restricted to the original columns it is exactly the lazy reduction (Theorem 5.5).",
+        warn: "This is the corrected algorithm from the arXiv version; the version printed in the SoCG 2025 proceedings is incorrect." },
     ];
     const BASE = "assets/algorithms/";
     const $ = (id) => document.getElementById(id);
-    const obj = $("alg-svg"), playBtn = $("alg-play"), scrub = $("alg-scrub"), timeEl = $("alg-time");
-    let cur = null, svg = null, dur = 0, paused = false, dragging = false;
+    const obj = $("alg-svg"), playBtn = $("alg-play"), scrub = $("alg-scrub"), timeEl = $("alg-time"), speedSel = $("alg-speed");
+    // The page drives the SVG's clock itself (the SVG stays paused), so the speed can be changed
+    // and the animation stepped from one change to the next.
+    let cur = null, svg = null, dur = 0, t = 0, playing = true, speed = 1, steps = [], last = null, dragging = false;
 
     const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
-    function setPaused(p) {
-      paused = p;
-      if (svg) p ? svg.pauseAnimations() : svg.unpauseAnimations();
-      playBtn.querySelector("i").className = p ? "fa-solid fa-play" : "fa-solid fa-pause";
-      playBtn.querySelector("span").textContent = p ? "Play" : "Pause";
+    function setPlaying(p) {
+      playing = p; last = null;
+      playBtn.querySelector("i").className = p ? "fa-solid fa-pause" : "fa-solid fa-play";
+      playBtn.querySelector("span").textContent = p ? "Pause" : "Play";
+    }
+    function seek(x) {
+      t = Math.max(0, Math.min(x, dur || 0));
+      if (svg) svg.setCurrentTime(t);
+    }
+    function step(dir) {
+      if (!steps.length) return;
+      setPlaying(false);
+      const eps = 1e-3;
+      const target = dir > 0 ? steps.find((s) => s > t + eps) : [...steps].reverse().find((s) => s < t - eps);
+      seek(target === undefined ? (dir > 0 ? steps[steps.length - 1] : 0) : target);
+    }
+    function setSpeed(v) {
+      speed = v;
+      speedSel.value = String(v);
+      try { localStorage.setItem("alg-speed", String(v)); } catch (e) {}
+    }
+    function nudgeSpeed(dir) {
+      const opts = [...speedSel.options].map((o) => parseFloat(o.value));
+      const i = opts.indexOf(speed);
+      setSpeed(opts[Math.max(0, Math.min(opts.length - 1, (i < 0 ? opts.indexOf(1) : i) + dir))]);
     }
 
     for (const a of ALGS) {
@@ -178,45 +220,73 @@
 
     function select(id) {
       const a = ALGS.find((x) => x.id === id) || ALGS[0];
-      cur = a; svg = null; dur = 0;
+      if (a === cur && svg) return;
+      cur = a; svg = null; dur = 0; t = 0; steps = [];
       for (const x of ALGS) $("tab-" + x.id).setAttribute("aria-selected", String(x === a));
       $("alg-title").textContent = a.title;
       $("alg-meta").replaceChildren(...a.meta.map((m) => Object.assign(document.createElement("span"), { className: "chip", textContent: m })));
       $("alg-text").textContent = a.text;
+      $("alg-warn").hidden = !a.warn;
+      $("alg-warn").textContent = a.warn || "";
       $("alg-open").href = BASE + a.file;
       obj.data = BASE + a.file;
     }
 
     obj.addEventListener("load", () => {
       try {
-        svg = obj.contentDocument.documentElement;
-        const anim = svg.querySelector("animate[dur]");
-        dur = anim ? parseFloat(anim.getAttribute("dur")) : 0;
-        const vb = svg.viewBox.baseVal;
+        const root = obj.contentDocument.documentElement;
+        const anims = [...root.querySelectorAll("animate[dur]")];
+        dur = anims.length ? parseFloat(anims[0].getAttribute("dur")) : 0;
+        // every time at which something changes is a step boundary
+        const set = new Set([0]);
+        for (const an of anims) {
+          for (const k of (an.getAttribute("keyTimes") || "").split(";")) {
+            const v = parseFloat(k);
+            if (v > 0 && v < 1) set.add(Math.round(v * dur * 1000) / 1000);
+          }
+        }
+        steps = [...set].sort((x, y) => x - y);
+        const vb = root.viewBox.baseVal;
         if (vb && vb.width) obj.style.aspectRatio = `${vb.width} / ${vb.height}`;
         scrub.max = dur || 100;
-        svg.setCurrentTime(0);
-        setPaused(false);
+        root.pauseAnimations();
+        svg = root;
+        seek(0);
+        setPlaying(true);
       } catch (e) { svg = null; }
     });
 
-    playBtn.addEventListener("click", () => setPaused(!paused));
-    $("alg-restart").addEventListener("click", () => { if (svg) { svg.setCurrentTime(0); setPaused(false); } });
-    scrub.addEventListener("input", () => { dragging = true; if (svg) svg.setCurrentTime(parseFloat(scrub.value)); });
+    playBtn.addEventListener("click", () => setPlaying(!playing));
+    $("alg-restart").addEventListener("click", () => { seek(0); setPlaying(true); });
+    $("alg-prev").addEventListener("click", () => step(-1));
+    $("alg-next").addEventListener("click", () => step(1));
+    speedSel.addEventListener("change", () => setSpeed(parseFloat(speedSel.value)));
+    scrub.addEventListener("input", () => { dragging = true; seek(parseFloat(scrub.value)); });
     scrub.addEventListener("change", () => { dragging = false; });
+    try { const v = parseFloat(localStorage.getItem("alg-speed")); if (v) setSpeed(v); } catch (e) {}
 
-    (function tick() {
+    function tick(now) {
       if (svg && dur) {
-        const t = svg.getCurrentTime() % dur;
+        if (playing && !dragging && last !== null) {
+          t += ((now - last) / 1000) * speed;
+          if (t >= dur) t = 0;   // loop, like the original animation
+          svg.setCurrentTime(t);
+        }
+        last = now;
         if (!dragging) scrub.value = t;
-        timeEl.textContent = `${fmt(t)} / ${fmt(dur)}`;
+        timeEl.textContent = `${fmt(t / speed)} / ${fmt(dur / speed)}`;
       }
       requestAnimationFrame(tick);
-    })();
+    }
+    requestAnimationFrame(tick);
 
     document.addEventListener("keydown", (e) => {
-      if (e.target.closest("input, button, a")) return;
-      if (e.key === " ") { e.preventDefault(); setPaused(!paused); }
+      if (e.target.closest("input, select, textarea") || e.metaKey || e.ctrlKey || e.altKey) return;
+      if (e.key === " " && !e.target.closest("button, a")) { e.preventDefault(); setPlaying(!playing); }
+      else if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
+      else if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
+      else if (e.key === "+" || e.key === "=") nudgeSpeed(1);
+      else if (e.key === "-" || e.key === "_") nudgeSpeed(-1);
     });
 
     select(location.hash.slice(1));
