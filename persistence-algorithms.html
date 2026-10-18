@@ -110,7 +110,7 @@
         </div>
 
         <div class="alg-controls">
-          <button type="button" class="btn" id="alg-play"><i class="fa-solid fa-pause" aria-hidden="true"></i> <span>Pause</span></button>
+          <button type="button" class="btn" id="alg-play" aria-label="Pause"><i class="fa-solid fa-pause" aria-hidden="true"></i> <span>Pause</span></button>
           <button type="button" class="btn btn-ghost icon" id="alg-prev" title="Previous step (←)" aria-label="Previous step"><i class="fa-solid fa-backward-step" aria-hidden="true"></i></button>
           <button type="button" class="btn btn-ghost icon" id="alg-next" title="Next step (→)" aria-label="Next step"><i class="fa-solid fa-forward-step" aria-hidden="true"></i></button>
           <button type="button" class="btn btn-ghost" id="alg-restart"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Restart</button>
@@ -186,6 +186,7 @@
       playing = p; last = null;
       playBtn.querySelector("i").className = p ? "fa-solid fa-pause" : "fa-solid fa-play";
       playBtn.querySelector("span").textContent = p ? "Pause" : "Play";
+      playBtn.setAttribute("aria-label", p ? "Pause" : "Play");
     }
     function seek(x) {
       t = Math.max(0, Math.min(x, dur || 0));
@@ -194,9 +195,10 @@
     function step(dir) {
       if (!steps.length) return;
       setPlaying(false);
-      const eps = 1e-3;
-      const target = dir > 0 ? steps.find((s) => s > t + eps) : [...steps].reverse().find((s) => s < t - eps);
-      seek(target === undefined ? (dir > 0 ? steps[steps.length - 1] : 0) : target);
+      // land just after a change: exactly on it the browser may still show the state before
+      const after = 0.01, eps = 0.02;
+      const target = dir > 0 ? steps.find((s) => s > t + eps - after) : [...steps].reverse().find((s) => s < t - eps);
+      seek(target === undefined ? (dir > 0 ? steps[steps.length - 1] : 0) : target + (target > 0 ? after : 0));
     }
     function setSpeed(v) {
       speed = v;
@@ -268,7 +270,8 @@
     function tick(now) {
       if (svg && dur) {
         if (playing && !dragging && last !== null) {
-          t += ((now - last) / 1000) * speed;
+          // at most 0.25 s per frame: a background tab pauses instead of jumping ahead
+          t += Math.min((now - last) / 1000, 0.25) * speed;
           if (t >= dur) t = 0;   // loop, like the original animation
           svg.setCurrentTime(t);
         }
@@ -280,9 +283,13 @@
     }
     requestAnimationFrame(tick);
 
+    // Space on a focused control button would otherwise also "click" it on key-up
+    document.addEventListener("keyup", (e) => {
+      if (e.key === " " && e.target.closest(".alg-controls button")) e.preventDefault();
+    });
     document.addEventListener("keydown", (e) => {
       if (e.target.closest("input, select, textarea") || e.metaKey || e.ctrlKey || e.altKey) return;
-      if (e.key === " " && !e.target.closest("button, a")) { e.preventDefault(); setPlaying(!playing); }
+      if (e.key === " " && !e.target.closest("a, .alg-tab, .theme-toggle")) { e.preventDefault(); setPlaying(!playing); }
       else if (e.key === "ArrowRight") { e.preventDefault(); step(1); }
       else if (e.key === "ArrowLeft") { e.preventDefault(); step(-1); }
       else if (e.key === "+" || e.key === "=") nudgeSpeed(1);
