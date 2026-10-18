@@ -46,13 +46,19 @@
     if (p.arxiv) links.append(link("https://arxiv.org/abs/" + p.arxiv, "arXiv"));
     if (p.pdf) links.append(link(encodeURI(p.pdf), "PDF"));
     if (p.doi) links.append(link("https://doi.org/" + p.doi, "DOI"));
+    if (p.corrected) {
+      // e.g. an error in the published version, fixed in a later (arXiv) version
+      links.append(el("a", { href: p.corrected.url, target: "_blank", rel: "noopener", class: "corrected", title: p.corrected.note || "" },
+        [el("i", { class: "fa-solid fa-triangle-exclamation", "aria-hidden": "true" }), " Corrected version on arXiv"]));
+    }
     if (p.bibtex) {
       const btn = el("button", { type: "button", class: "bib-btn" }, "BibTeX");
       btn.addEventListener("click", () => openBib(p));
       links.append(btn);
     }
 
-    return el("li", { class: "pub" }, [title, authorsNode(p.authors), venue, links]);
+    const note = p.corrected && p.corrected.note ? el("div", { class: "pub-note" }, p.corrected.note) : null;
+    return el("li", { class: "pub" }, [title, authorsNode(p.authors), venue, links, note]);
   }
 
   const bibDialog = document.getElementById("bib-dialog");

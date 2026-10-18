@@ -132,6 +132,7 @@ window.PUBLICATIONS = [
     venue: "41st International Symposium on Computational Geometry (SoCG 2025), LIPIcs 332, 68:1–68:16",
     year: 2025, type: "conference",
     doi: "10.4230/LIPIcs.SoCG.2025.68", arxiv: "2412.02591",
+    corrected: { url: "https://arxiv.org/abs/2412.02591", note: "The fast row algorithm (Algorithm 5) in the SoCG version is incorrect; the corrected version is on arXiv." },
     bibtex: String.raw`
 @inproceedings{morozov2025persistent,
   author = {Morozov, Dmitriy and Skraba, Primoz},
