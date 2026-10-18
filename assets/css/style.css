@@ -275,7 +275,6 @@ h1, h2, h3 { font-family: var(--serif); font-weight: 600; line-height: 1.2; }
 }
 .pub-links a { border: 1px solid var(--border); color: var(--accent); background: var(--surface); }
 .pub-links a:hover { border-color: var(--accent); text-decoration: none; }
-.pub-links a.corrected { color: var(--highlight); border-color: color-mix(in srgb, var(--highlight) 45%, var(--border)); background: color-mix(in srgb, var(--highlight) 8%, var(--surface)); }
 .pub-links a.corrected i { margin-right: 3px; }
 .pub-note { font-size: 0.85rem; color: var(--muted); margin-top: 6px; }
 .bib-btn {

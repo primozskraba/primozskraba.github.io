@@ -49,7 +49,7 @@
     if (p.corrected) {
       // e.g. an error in the published version, fixed in a later (arXiv) version
       links.append(el("a", { href: p.corrected.url, target: "_blank", rel: "noopener", class: "corrected", title: p.corrected.note || "" },
-        [el("i", { class: "fa-solid fa-triangle-exclamation", "aria-hidden": "true" }), " Corrected version on arXiv"]));
+        [el("i", { class: "fa-solid fa-circle-info", "aria-hidden": "true" }), " Corrected version on arXiv"]));
     }
     if (p.bibtex) {
       const btn = el("button", { type: "button", class: "bib-btn" }, "BibTeX");
