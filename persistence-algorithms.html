@@ -45,9 +45,9 @@
     .sw { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(0, 0, 0, 0.15); display: inline-block; }
     .paper-ref { font-size: 0.95rem; color: var(--muted); margin: -12px 0 26px; max-width: 900px; }
     .paper-ref i { margin-right: 4px; }
-    .erratum { font-size: 0.93rem; max-width: 900px; margin: -14px 0 26px; padding: 10px 14px; border-radius: 10px; border: 1px solid color-mix(in srgb, var(--highlight) 45%, var(--border)); background: color-mix(in srgb, var(--highlight) 8%, var(--surface)); }
-    .erratum i { color: var(--highlight); margin-right: 4px; }
-    .alg-warn { font-size: 0.93rem; margin: 0 0 12px; color: var(--highlight); }
+    .erratum { font-size: 0.93rem; max-width: 900px; margin: -14px 0 26px; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--border); background: var(--surface); }
+    .erratum i { color: var(--muted); margin-right: 4px; }
+    .alg-warn { font-size: 0.93rem; margin: 0 0 12px; color: var(--muted); }
     .alg-controls select { font: inherit; font-size: 0.92rem; padding: 6px 8px; border-radius: 8px; border: 1px solid var(--border); background: var(--surface); color: var(--text); }
     .alg-controls label { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 0.9rem; }
     .alg-controls .btn.icon { padding: 7px 11px; }
@@ -85,7 +85,7 @@
         <p class="paper-ref"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> The algorithms, and the numbering of algorithms and results in the animations, follow
           D. Morozov and P. Skraba, <a href="https://arxiv.org/abs/2412.02591" target="_blank" rel="noopener"><em>Persistent (Co)Homology in Matrix Multiplication Time</em></a>,
           SoCG 2025 (<a href="https://doi.org/10.4230/LIPIcs.SoCG.2025.68" target="_blank" rel="noopener">LIPIcs 332, 68:1–68:16</a>) · <a href="https://arxiv.org/abs/2412.02591" target="_blank" rel="noopener">arXiv:2412.02591</a>.</p>
-        <p class="erratum"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> <strong>Erratum.</strong> The fast row algorithm (Algorithm 5) as printed in the SoCG 2025 proceedings is incorrect. The corrected algorithm is in the <a href="https://arxiv.org/abs/2412.02591" target="_blank" rel="noopener">arXiv version</a>, which the animation below follows.</p>
+        <p class="erratum"><i class="fa-solid fa-circle-info" aria-hidden="true"></i> <strong>Erratum.</strong> The fast row algorithm (Algorithm 5) as printed in the SoCG 2025 proceedings is incorrect. The corrected algorithm is in the <a href="https://arxiv.org/abs/2412.02591" target="_blank" rel="noopener">arXiv version</a>, which the animation below follows.</p>
 
         <div class="alg-picker" role="tablist" aria-label="Algorithm">
           <div class="alg-group">
