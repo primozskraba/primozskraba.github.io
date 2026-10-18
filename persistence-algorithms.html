@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Persistence algorithms, animated · Primoz Skraba</title>
+  <meta name="description" content="Step-by-step animations of matrix reduction algorithms for persistent homology: lazy and exhaustive reduction, column and row versions, and the fast O(n^ω) column and row algorithms.">
+  <meta name="author" content="Primoz Skraba">
+  <meta property="og:title" content="Persistence algorithms, animated">
+  <meta property="og:description" content="Step-by-step animations of matrix reduction algorithms for persistent homology.">
+  <link rel="icon" type="image/svg+xml" href="assets/img/favicon.svg">
+  <script>
+    try { var t = localStorage.getItem("theme"); if (t) document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+  <script>
+    window.MathJax = { tex: { inlineMath: [["\\(", "\\)"]] }, startup: { typeset: true } };
+  </script>
+  <script async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <style>
+    .alg-picker { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 0 0 22px; }
+    .alg-group { border: 1px solid var(--border); border-radius: 12px; background: var(--surface); padding: 12px 14px 14px; }
+    .alg-group h3 { font-family: var(--sans); font-size: 0.78rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+    .alg-tabs { display: flex; flex-wrap: wrap; gap: 8px; }
+    .alg-tab { font: inherit; font-size: 0.92rem; font-weight: 500; padding: 7px 12px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); cursor: pointer; }
+    .alg-tab:hover { border-color: var(--accent); }
+    .alg-tab[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+    .alg-tab small { font-weight: 400; opacity: 0.8; }
+    .alg-info h2 { font-family: var(--serif); font-size: 1.45rem; font-weight: 600; margin: 0 0 6px; }
+    .alg-info p { margin: 0 0 8px; max-width: 900px; }
+    .alg-meta { display: flex; flex-wrap: wrap; gap: 8px; margin: 4px 0 16px; }
+    .chip { font-size: 0.82rem; padding: 3px 10px; border-radius: 999px; background: var(--accent-soft); color: var(--accent); font-weight: 500; }
+    .alg-stage { border: 1px solid var(--border); border-radius: 12px; background: #fff; box-shadow: var(--shadow); overflow: hidden; }
+    .alg-stage object { display: block; width: 100%; height: auto; aspect-ratio: 940 / 470; }
+    .alg-controls { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: 14px; }
+    .alg-controls .btn { padding: 7px 14px; }
+    .alg-controls input[type="range"] { flex: 1 1 260px; accent-color: var(--accent); }
+    .alg-time { font-variant-numeric: tabular-nums; color: var(--muted); font-size: 0.9rem; min-width: 7.5em; text-align: right; }
+    .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 18px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 0.9rem; }
+    .legend li { display: inline-flex; align-items: center; gap: 7px; }
+    .sw { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(0, 0, 0, 0.15); display: inline-block; }
+    .back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.92rem; margin-bottom: 18px; }
+    @media (max-width: 760px) { .alg-picker { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <header class="site-header">
+    <nav class="nav" aria-label="Sections">
+      <a class="nav-name" href="index.html#home">P. Skraba</a>
+      <ul class="nav-links">
+        <li><a href="index.html#research">Research</a></li>
+        <li><a href="index.html#publications">Publications</a></li>
+        <li><a href="index.html#teaching">Teaching</a></li>
+        <li><a href="index.html#talks">Talks</a></li>
+        <li><a class="active" href="index.html#demos">Demos</a></li>
+        <li><a href="index.html#cv">CV</a></li>
+      </ul>
+      <button class="theme-toggle" type="button" aria-label="Toggle dark mode" title="Toggle dark mode">
+        <i class="fa-solid fa-moon" aria-hidden="true"></i>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main">
+    <section class="section">
+      <div class="wrap">
+        <a class="back" href="index.html#demos"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Demos</a>
+        <h1 class="section-title">Persistence algorithms, animated</h1>
+        <p class="lede">Persistent homology is computed by reducing the boundary matrix \(D\) to a matrix \(R = DV\) whose non-zero columns have distinct lowest entries (pivots). The animations below run six reduction algorithms on the same \(8 \times 8\) matrix over \(\mathbb{Z}/2\), step by step: the lazy and exhaustive reductions, each processed column by column or row by row, and the fast column and row algorithms that run in matrix-multiplication time \(O(n^\omega)\).</p>
+
+        <div class="alg-picker" role="tablist" aria-label="Algorithm">
+          <div class="alg-group">
+            <h3>Column algorithms</h3>
+            <div class="alg-tabs" id="tabs-column"></div>
+          </div>
+          <div class="alg-group">
+            <h3>Row algorithms</h3>
+            <div class="alg-tabs" id="tabs-row"></div>
+          </div>
+        </div>
+
+        <div class="alg-info" aria-live="polite">
+          <h2 id="alg-title"></h2>
+          <div class="alg-meta" id="alg-meta"></div>
+          <p id="alg-text"></p>
+        </div>
+
+        <div class="alg-stage">
+          <object id="alg-svg" type="image/svg+xml" aria-label="Animation of the selected algorithm"></object>
+        </div>
+
+        <div class="alg-controls">
+          <button type="button" class="btn" id="alg-play"><i class="fa-solid fa-pause" aria-hidden="true"></i> <span>Pause</span></button>
+          <button type="button" class="btn btn-ghost" id="alg-restart"><i class="fa-solid fa-rotate-left" aria-hidden="true"></i> Restart</button>
+          <input type="range" id="alg-scrub" min="0" max="100" step="0.1" value="0" aria-label="Position in the animation">
+          <span class="alg-time" id="alg-time">0:00 / 0:00</span>
+          <a class="btn btn-ghost" id="alg-open" href="#" target="_blank" rel="noopener"><i class="fa-solid fa-up-right-from-square" aria-hidden="true"></i> SVG</a>
+        </div>
+
+        <ul class="legend" aria-label="Colour legend">
+          <li><span class="sw" style="background:#b4b9f6"></span> non-zero entry</li>
+          <li><span class="sw" style="background:#1b1fa8"></span> pivot</li>
+          <li><span class="sw" style="background:#fbe2bf"></span> column being reduced</li>
+          <li><span class="sw" style="background:#c6e5cf"></span> column being added</li>
+          <li><span class="sw" style="background:#555555"></span> entry just changed</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <span>© <span id="year"></span> Primoz Skraba</span>
+      <a href="index.html#demos">Back to Demos <i class="fa-solid fa-arrow-left" aria-hidden="true"></i></a>
+    </div>
+  </footer>
+
+  <script>
+  (function () {
+    const ALGS = [
+      { id: "lazy-column", group: "column", tab: "Lazy", file: "1_lazy_column.svg",
+        title: "Lazy reduction (the standard algorithm)",
+        meta: ["Algorithm 1", "columns left to right", "worst case O(n³)"],
+        text: "Columns are processed from left to right. A column is touched only when its pivot collides with the pivot of an earlier column; the earlier column is then added to it, and the same operation is recorded in V. Columns that reduce to zero give cycles: their V-columns are in the kernel of D." },
+      { id: "exhaustive-column", group: "column", tab: "Exhaustive", file: "2_exhaustive_column.svg",
+        title: "Exhaustive (look-ahead) reduction",
+        meta: ["Algorithm 2", "columns left to right"],
+        text: "As soon as a pivot is found it is applied to every column to its right, so each column is already reduced when it is reached. The pivots and the cycles are the same as for the lazy reduction, but R is different: each pivot row is zero to the right of its pivot." },
+      { id: "fast-column", group: "column", tab: "Fast", file: "5_fast_column.svg",
+        title: "Fast column algorithm",
+        meta: ["Algorithm 3", "binary recursion on columns", "O(n^ω)"],
+        text: "The matrix is augmented with an identity block and the columns are split recursively in halves. Once the left half is reduced, its pivots are cleared from the right half in one block step, with a k × k matrix inverse and matrix products. Zero columns are swapped with identity columns so the processed columns always hold their pivots. Restricted to the original columns, the result is the exhaustive reduction." },
+      { id: "lazy-row", group: "row", tab: "Lazy", file: "3_lazy_row.svg",
+        title: "Incremental row algorithm (lazy)",
+        meta: ["Algorithm 4", "rows bottom-up"],
+        text: "Rows are processed from the bottom up. For row i, the earliest column whose lowest entry lies in row i is added only to the later columns whose lowest entry is also row i. This produces exactly the same decomposition as the lazy column reduction (Lemma 5.1), row by row instead of column by column." },
+      { id: "exhaustive-row", group: "row", tab: "Exhaustive", file: "4_exhaustive_row.svg",
+        title: "Exhaustive row algorithm",
+        meta: ["rows bottom-up"],
+        text: "Rows are processed from the bottom up, and the pivot column of each row is applied to every later column with a non-zero entry in that row. Each pivot row becomes zero to the right of its pivot, which gives the exhaustive reduction; the fully reduced matrix is unique." },
+      { id: "fast-row", group: "row", tab: "Fast", file: "6_fast_row.svg",
+        title: "Fast row algorithm",
+        meta: ["Algorithm 5", "binary recursion on rows", "O(n^ω)"],
+        text: "The matrix is padded with an identity block, R = [D | I], and the rows are processed bottom-up by a binary recursion. Each half is solved recursively and the result propagated with matrix products; unlike the column algorithm no inverse is needed, only column permutations and products. Restricted to the original columns it is exactly the lazy reduction (Theorem 5.5)." },
+    ];
+    const BASE = "assets/algorithms/";
+    const $ = (id) => document.getElementById(id);
+    const obj = $("alg-svg"), playBtn = $("alg-play"), scrub = $("alg-scrub"), timeEl = $("alg-time");
+    let cur = null, svg = null, dur = 0, paused = false, dragging = false;
+
+    const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+    function setPaused(p) {
+      paused = p;
+      if (svg) p ? svg.pauseAnimations() : svg.unpauseAnimations();
+      playBtn.querySelector("i").className = p ? "fa-solid fa-play" : "fa-solid fa-pause";
+      playBtn.querySelector("span").textContent = p ? "Play" : "Pause";
+    }
+
+    for (const a of ALGS) {
+      const b = document.createElement("button");
+      b.type = "button"; b.className = "alg-tab"; b.id = "tab-" + a.id;
+      b.setAttribute("role", "tab"); b.setAttribute("aria-controls", "alg-svg");
+      b.innerHTML = `${a.tab} <small>${a.group}</small>`;
+      b.addEventListener("click", () => { history.replaceState(null, "", "#" + a.id); select(a.id); });
+      $("tabs-" + a.group).append(b);
+    }
+
+    function select(id) {
+      const a = ALGS.find((x) => x.id === id) || ALGS[0];
+      cur = a; svg = null; dur = 0;
+      for (const x of ALGS) $("tab-" + x.id).setAttribute("aria-selected", String(x === a));
+      $("alg-title").textContent = a.title;
+      $("alg-meta").replaceChildren(...a.meta.map((m) => Object.assign(document.createElement("span"), { className: "chip", textContent: m })));
+      $("alg-text").textContent = a.text;
+      $("alg-open").href = BASE + a.file;
+      obj.data = BASE + a.file;
+    }
+
+    obj.addEventListener("load", () => {
+      try {
+        svg = obj.contentDocument.documentElement;
+        const anim = svg.querySelector("animate[dur]");
+        dur = anim ? parseFloat(anim.getAttribute("dur")) : 0;
+        const vb = svg.viewBox.baseVal;
+        if (vb && vb.width) obj.style.aspectRatio = `${vb.width} / ${vb.height}`;
+        scrub.max = dur || 100;
+        svg.setCurrentTime(0);
+        setPaused(false);
+      } catch (e) { svg = null; }
+    });
+
+    playBtn.addEventListener("click", () => setPaused(!paused));
+    $("alg-restart").addEventListener("click", () => { if (svg) { svg.setCurrentTime(0); setPaused(false); } });
+    scrub.addEventListener("input", () => { dragging = true; if (svg) svg.setCurrentTime(parseFloat(scrub.value)); });
+    scrub.addEventListener("change", () => { dragging = false; });
+
+    (function tick() {
+      if (svg && dur) {
+        const t = svg.getCurrentTime() % dur;
+        if (!dragging) scrub.value = t;
+        timeEl.textContent = `${fmt(t)} / ${fmt(dur)}`;
+      }
+      requestAnimationFrame(tick);
+    })();
+
+    document.addEventListener("keydown", (e) => {
+      if (e.target.closest("input, button, a")) return;
+      if (e.key === " ") { e.preventDefault(); setPaused(!paused); }
+    });
+
+    select(location.hash.slice(1));
+    window.addEventListener("hashchange", () => select(location.hash.slice(1)));
+
+    // theme toggle (same behaviour as the main page)
+    const root = document.documentElement;
+    const toggle = document.querySelector(".theme-toggle");
+    const icon = toggle.querySelector("i");
+    const isDark = () => (root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches);
+    const syncIcon = () => (icon.className = isDark() ? "fa-solid fa-sun" : "fa-solid fa-moon");
+    syncIcon();
+    toggle.addEventListener("click", () => {
+      root.dataset.theme = isDark() ? "light" : "dark";
+      try { localStorage.setItem("theme", root.dataset.theme); } catch (e) {}
+      syncIcon();
+    });
+    $("year").textContent = new Date().getFullYear();
+  })();
+  </script>
+</body>
+</html>
