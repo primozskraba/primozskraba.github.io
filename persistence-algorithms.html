@@ -43,6 +43,8 @@
     .legend { display: flex; flex-wrap: wrap; gap: 6px 18px; margin: 18px 0 0; padding: 0; list-style: none; color: var(--muted); font-size: 0.9rem; }
     .legend li { display: inline-flex; align-items: center; gap: 7px; }
     .sw { width: 14px; height: 14px; border-radius: 3px; border: 1px solid rgba(0, 0, 0, 0.15); display: inline-block; }
+    .paper-ref { font-size: 0.95rem; color: var(--muted); margin: -12px 0 26px; max-width: 900px; }
+    .paper-ref i { margin-right: 4px; }
     .back { display: inline-flex; align-items: center; gap: 6px; font-size: 0.92rem; margin-bottom: 18px; }
     @media (max-width: 760px) { .alg-picker { grid-template-columns: 1fr; } }
   </style>
@@ -73,6 +75,9 @@
         <a class="back" href="index.html#demos"><i class="fa-solid fa-arrow-left" aria-hidden="true"></i> Demos</a>
         <h1 class="section-title">Persistence algorithms, animated</h1>
         <p class="lede">Persistent homology is computed by reducing the boundary matrix \(D\) to a matrix \(R = DV\) whose non-zero columns have distinct lowest entries (pivots). The animations below run six reduction algorithms on the same \(8 \times 8\) matrix over \(\mathbb{Z}/2\), step by step: the lazy and exhaustive reductions, each processed column by column or row by row, and the fast column and row algorithms that run in matrix-multiplication time \(O(n^\omega)\).</p>
+        <p class="paper-ref"><i class="fa-regular fa-file-lines" aria-hidden="true"></i> The algorithms, and the numbering of algorithms and results in the animations, follow
+          D. Morozov and P. Skraba, <a href="https://arxiv.org/abs/2412.02591" target="_blank" rel="noopener"><em>Persistent (Co)Homology in Matrix Multiplication Time</em></a>,
+          SoCG 2025 (<a href="https://doi.org/10.4230/LIPIcs.SoCG.2025.68" target="_blank" rel="noopener">LIPIcs 332, 68:1–68:16</a>) · <a href="https://arxiv.org/abs/2412.02591" target="_blank" rel="noopener">arXiv:2412.02591</a>.</p>
 
         <div class="alg-picker" role="tablist" aria-label="Algorithm">
           <div class="alg-group">
